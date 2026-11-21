@@ -1,1 +1,8 @@
-{"name":"BEN AI FREE","short_name":"BEN AI","start_url":"./","display":"standalone","background_color":"#f2f6fa","theme_color":"#102d50","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "BEN AI SIGNAL BOT 2.2 - Auto Price Sync",
+  "short_name": "BEN SIGNAL",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eef3f8",
+  "theme_color": "#102b49"
+}

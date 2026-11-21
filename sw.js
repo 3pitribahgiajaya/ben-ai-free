@@ -1,1 +1,4 @@
-const C='ben-ai-free-v1';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./manifest.webmanifest','./icon.svg']))));self.addEventListener('fetch',e=>{if(e.request.method==='GET')e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./index.html'))))});
+const CACHE="ben-signal-v22";
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(["./","./index.html","./manifest.webmanifest"])));self.skipWaiting()});
+self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
+self.addEventListener("fetch",e=>{if(e.request.method==="GET"&&new URL(e.request.url).origin===self.location.origin)e.respondWith(caches.match(e.request).then(x=>x||fetch(e.request)))});
