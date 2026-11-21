@@ -2,7 +2,7 @@
 <html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#102b49"><meta name="description" content="BEN AI Signal Bot 2.2 automatic crypto price sync">
-<link rel="manifest" href="./manifest.webmanifest"><title>BEN AI SIGNAL BOT 2.2</title>
+<link rel="manifest" href="./manifest.webmanifest"><title>BEN AI SIGNAL BOT 2.3</title>
 <style>
 :root{--navy:#102b49;--blue:#1769aa;--bg:#eef3f8;--ink:#172638;--muted:#6b7b8d;--line:#dce5ee;--green:#168653;--red:#c23d46;--amber:#a66b00}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.app{max-width:980px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 32px #102b4910}
@@ -10,7 +10,7 @@ header{padding:18px;background:linear-gradient(130deg,#102b49,#1a5a8d);color:#ff
 main{padding:14px}.notice{background:#fff7e7;border:1px solid #f0dfb8;color:#72551d;padding:11px;border-radius:12px;font-size:11px;line-height:1.5;margin-bottom:12px}.toolbar,.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}.toolbar button,.actions button,.btn{border:0;border-radius:10px;padding:10px 12px;background:var(--blue);color:#fff;font-weight:650;font-size:12px;text-decoration:none;cursor:pointer}.secondary{background:#edf3f8!important;color:#294963!important}.muted{color:var(--muted)}.small{font-size:11px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff;min-width:0}.coinhead{display:flex;justify-content:space-between;align-items:center}.coinhead h2{font-size:15px;margin:0}.tag{font-size:10px;background:#edf3f8;padding:5px 7px;border-radius:20px;color:#49627a}.price{font-size:23px;font-weight:750;margin:12px 0 2px}.signal{margin-top:10px;border-radius:10px;padding:10px;font-size:13px;font-weight:750;display:flex;justify-content:space-between}.buy{background:#e8f7ef;color:#116b42}.sell{background:#fff0f0;color:#a72f38}.wait{background:#fff7e7;color:#865a09}.metrics,.levels,.settings{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.metric,.level{background:#f5f8fb;border-radius:9px;padding:8px;min-width:0}.metric span,.level span{display:block;color:var(--muted);font-size:10px}.metric b,.level b{display:block;font-size:12px;margin-top:4px;overflow-wrap:anywhere}.section{margin-top:14px}.section h3{font-size:14px;color:#183d60;margin:0 0 9px}.settings{grid-template-columns:repeat(2,minmax(0,1fr))}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit;font-size:13px;background:#fff;color:var(--ink)}.statusbox{padding:11px;border:1px solid var(--line);border-radius:11px;font-size:12px;line-height:1.55}.footer{text-align:center;padding:18px;color:#8b99a8;font-size:10px}
 @media(max-width:620px){main{padding:11px}.grid{grid-template-columns:1fr}.price{font-size:22px}}
 </style></head><body><div class="app">
-<header><div class="brand"><div class="logo">⌁</div><div><h1>BEN AI SIGNAL BOT 2.2</h1><p>BTC/IDR • ETH/IDR | Auto price sync • EMA 9/21 • RSI 14</p></div></div><div class="live" id="conn">MENYIAPKAN</div></header>
+<header><div class="brand"><div class="logo">⌁</div><div><h1>BEN AI SIGNAL BOT 2.3</h1><p>BTC/IDR • ETH/IDR | Auto price sync • EMA 9/21 • RSI 14</p></div></div><div class="live" id="conn">MENYIAPKAN</div></header>
 <main>
 <div class="notice"><b>Sinkronisasi harga otomatis — bukan auto-trading.</b> Harga pasar agregat BTC dan ETH diambil otomatis dari CoinPaprika tanpa API key, lalu dikonversi memakai kurs USD/IDR dari Frankfurter. Harga CoinPaprika gratis diperbarui rata-rata sekitar 5 menit; kurs valuta asing dapat mengikuti pembaruan harian. Ini bukan feed internal Trust Wallet dan harga swap Trust Wallet dapat berbeda karena spread, likuiditas, serta biaya jaringan. Indikator tren menggunakan candle Binance sebagai sumber pembanding. Order tidak dikirim.</div>
 <div class="toolbar"><button id="refresh">↻ Sinkronkan sekarang</button><button id="notify" class="secondary">Aktifkan notifikasi HP</button><a class="btn secondary" href="https://trustwallet.com/id/price" target="_blank" rel="noopener">Bandingkan Trust Wallet ↗</a><span class="muted small" id="updated">Belum diperbarui</span></div>
@@ -22,18 +22,17 @@ main{padding:14px}.notice{background:#fff7e7;border:1px solid #f0dfb8;color:#725
 <section class="section card"><h3>Kalkulator posisi & biaya</h3><div class="statusbox" id="calc">Menunggu harga otomatis.</div></section>
 <section class="section card"><h3>Status sinkronisasi & riwayat sinyal</h3><div class="statusbox" id="status">Menunggu data pasar.</div><div class="statusbox" id="history" style="margin-top:8px">Belum ada perubahan sinyal.</div></section>
 <section class="section card"><h3>Aturan sinyal</h3><div class="statusbox"><b>BUY:</b> EMA9 memotong ke atas EMA21 dan RSI 50–70.<br><b>SELL:</b> EMA9 memotong ke bawah EMA21.<br><b>WAIT:</b> kondisi lain. Sinyal teknikal sederhana, bukan prediksi atau jaminan profit.</div></section>
-</main><div class="footer">BEN AI SIGNAL BOT 2.2 • CoinPaprika market data + Frankfurter FX • Binance candle indicators • Manual execution only</div></div>
+</main><div class="footer">BEN AI SIGNAL BOT 2.3 • CoinPaprika market data + Frankfurter FX • Binance candle indicators • Manual execution only</div></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id),S={run:true,timer:null,last:{BTC:null,ETH:null},prices:{},data:{}};
 const fmt=(n,d=0)=>Number.isFinite(n)?n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d}):'—',rp=n=>'Rp '+fmt(n);
 function ema(a,p){let v=a[0],k=2/(p+1);for(let i=1;i<a.length;i++)v=a[i]*k+v*(1-k);return v}
 function rsi(a,p=14){let g=0,l=0;for(let i=a.length-p;i<a.length;i++){let d=a[i]-a[i-1];if(d>0)g+=d;else l-=d}return l===0?100:100-g/(g+l)*100}
-async function getJSON(url,ms=12000){let c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{cache:'no-store',signal:c.signal});if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
+async function getJSON(url,ms=15000){let c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{cache:'no-store',signal:c.signal,headers:{'Accept':'application/json'}});let body=await r.text();if(!r.ok)throw Error('HTTP '+r.status+' dari '+new URL(url).host);let data;try{data=JSON.parse(body)}catch(_){let host=new URL(url).host;throw Error(host+' mengirim HTML/teks, bukan JSON. Coba jaringan lain atau ulangi beberapa saat lagi.')}if(data&&data.error)throw Error(new URL(url).host+': '+data.error);return data}finally{clearTimeout(t)}}
 async function getPrices(){
- const [a,fxData]=await Promise.all([getJSON('https://api.coinpaprika.com/v1/tickers?quotes=USD'),getJSON('https://api.frankfurter.app/latest?from=USD&to=IDR')]);
- const btc=a.find(x=>x.id==='btc-bitcoin'),eth=a.find(x=>x.id==='eth-ethereum');
- if(!btc||!eth)throw Error('Ticker BTC/ETH tidak ditemukan di CoinPaprika');
+ const [btc,eth,fxData]=await Promise.all([getJSON('https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=USD'),getJSON('https://api.coinpaprika.com/v1/tickers/eth-ethereum?quotes=USD'),getJSON('https://api.frankfurter.app/latest?from=USD&to=IDR')]);
+ if(!btc||!eth||btc.id!=='btc-bitcoin'||eth.id!=='eth-ethereum')throw Error('Ticker BTC/ETH tidak valid dari CoinPaprika');
  const fx=Number(fxData&&fxData.rates&&fxData.rates.IDR);
  if(!(fx>0))throw Error('Kurs USD/IDR tidak tersedia dari Frankfurter');
  for(const [sym,x] of [['BTC',btc],['ETH',eth]]){
